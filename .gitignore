@@ -29,4 +29,7 @@
 
 # Editors
 .idea/*
+*/node_modules/*
+fe/build/*
+
 
