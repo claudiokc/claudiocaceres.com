@@ -14,14 +14,16 @@
 
 runtime: go123
 
-instance_class: F1
+instance_class: B1
 
 env_variables:
   BUCKET_NAME: "claudiocaceres-com"
+  PROJECT_ID: "claudio-caceres-webpage"
+  GCLOUD_DATASET_ID: "claudio-caceres-webpage"
 
-automatic_scaling:
-  min_instances: 1
+basic_scaling:
   max_instances: 1
+  idle_timeout: 10m
 
 handlers:
 - url: /

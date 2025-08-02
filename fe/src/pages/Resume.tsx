@@ -18,13 +18,7 @@ const Resume: React.FC = () => {
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                catocaceres@hotmail.com
-              </a>
-              <a href="mailto:ktocaceres@gmail.com" className="flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                ktocaceres@gmail.com
+                <span property="mail">catocaceres@hotmail.com</span>
               </a>
             </div>
           </div>
@@ -33,8 +27,8 @@ const Resume: React.FC = () => {
           <div className="p-8 border-b">
             <h2 className="text-2xl font-bold mb-4 text-gray-800">Summary</h2>
             <p className="text-gray-600">
-              Results-driven Senior Software Engineer with 10+ years of experience designing, building, and scaling full-stack applications. 
-              Specializes in Python (Flask, Django), JavaScript (ReactJS), cloud infrastructure (AWS, GCP), and Agile development. 
+              Results-driven Senior Software Engineer with 10+ years of experience designing, building, and scaling full-stack applications.
+              Specializes in Python (Flask, Django), JavaScript (ReactJS), cloud infrastructure (AWS, GCP), and Agile development.
               Adept at creating robust APIs, CI/CD pipelines, and performance-oriented frontends using modern frameworks and tools.
             </p>
           </div>
@@ -44,16 +38,23 @@ const Resume: React.FC = () => {
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Professional Experience</h2>
             <div className="space-y-8">
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">Senior Developer</h3>
-                <p className="text-blue-600">Filterbuy • Remote • June 2023 - Present</p>
-                <ul className="list-disc list-inside mt-2 text-gray-600">
-                  <li>Developed scalable APIs using Flask and integrated modern frontends with ReactJS and TailwindCSS</li>
-                  <li>Built and maintained CI/CD pipelines using AWS CodeBuild and CloudFormation</li>
-                  <li>Managed dependencies with Pyenv and Poetry</li>
-                  <li>Wrote unit and E2E tests using Pytest and Selenium WebDriver</li>
-                  <li>Configured Docker, NGINX, and Terraform for production-ready deployments</li>
+                <h3 className="text-xl font-semibold text-gray-800">Senior Software Engineer</h3>
+                <p className="text-blue-600">Filterbuy.com • Remote • June 2023 - Present</p>
+                <p className="text-gray-600 mb-3">E-commerce Marketplace Platform for HVAC & Air Filters</p>
+                <ul className="list-disc list-inside mt-2 text-gray-600 space-y-1">
+                  <li>Architected and maintained multi-tenant Django-based backend system handling product management, inventory, orders, and marketplace integrations</li>
+                  <li>Built modern Next.js frontend with TypeScript, implementing responsive design patterns and SEO optimization</li>
+                  <li>Designed complex database models for product variants, inventory management, and multi-channel sales tracking</li>
+                  <li>Integrated with 7+ major e-commerce marketplaces (Amazon SP-API, eBay, Walmart, Wayfair) and payment processors</li>
+                  <li>Developed comprehensive product catalog management with SKU-based inventory tracking across multiple warehouses</li>
+                  <li>Implemented automated pricing strategies and dynamic pricing algorithms for competitive marketplace positioning</li>
+                  <li>Built order management system with multi-carrier shipping integration (UPS, FedEx, Amazon FBA)</li>
+                  <li>Created advanced filtering and search functionality using Elasticsearch/OpenSearch</li>
+                  <li>Automated inventory synchronization across all sales channels with real-time stock updates</li>
+                  <li>Containerized application using Docker and implemented CI/CD pipelines with automated testing</li>
+                  <li>Configured monitoring and logging using Sentry, structured logging, and health checks</li>
                 </ul>
-                <p className="text-sm text-gray-500 mt-2">Tech Stack: Flask, React/Redux, TailwindCSS, Docker, PostgreSQL, AWS, Sentry, Redis</p>
+                <p className="text-sm text-gray-500 mt-2">Tech Stack: Django 3.2, Next.js 14, React 18, TypeScript, PostgreSQL, Redis, Celery, Elasticsearch/OpenSearch, Docker, AWS, Nginx, Gunicorn, Memcached, REST APIs, GraphQL, Jest, Testing Library</p>
               </div>
 
               <div>
