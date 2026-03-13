@@ -1,0 +1,19 @@
+# Claudio Cáceres
+
+> Senior Software Engineer and full-stack developer with 10+ years of experience building and scaling web applications. Specializes in Python (Django, Flask), JavaScript (React), cloud infrastructure (AWS, GCP), and Agile development.
+
+## Contact
+
+- [Email](mailto:me@claudiocaceres.com): Primary contact
+- [GitHub](https://github.com/claudiokc): Code and projects
+- [LinkedIn](https://linkedin.com/in/claudiokc): Professional profile
+
+## Key Information
+
+- [Home](https://claudiocaceres.com/): About and overview
+- [Resume](https://claudiocaceres.com/resume): Professional experience, skills, education
+- [Contact](https://claudiocaceres.com/contact): Get in touch
+
+## About
+
+Based in Buenos Aires, Argentina. Available for remote work. Focus areas: backend APIs, frontend development, CI/CD, and cloud-native applications.

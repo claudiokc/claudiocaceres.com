@@ -22,15 +22,12 @@ jobs:
         with:
           node-version: '20'
           cache: 'yarn'
-          cache-dependency-path: fe/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        working-directory: fe
 
       - name: Build
         run: yarn build
-        working-directory: fe
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

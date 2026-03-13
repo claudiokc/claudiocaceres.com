@@ -9,11 +9,11 @@ export default defineConfig({
     port: 3000,
   },
   build: {
-    outDir: '../build',
+    outDir: 'build',
     sourcemap: true,
     emptyOutDir: true,
   },
   css: {
     devSourcemap: true,
   }
-}); 
+});
