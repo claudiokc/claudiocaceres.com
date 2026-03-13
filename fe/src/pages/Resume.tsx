@@ -39,7 +39,17 @@ const Resume: React.FC = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">Senior Software Engineer</h3>
-                <p className="text-blue-600">Filterbuy.com • Remote • June 2023 - Present</p>
+                <p className="text-blue-600">OpenSolar • Sep 2025 - Present</p>
+                <ul className="list-disc list-inside mt-2 text-gray-600 space-y-1">
+                  <li>Backend API using Django/DRF</li>
+                  <li>Frontend development with React</li>
+                </ul>
+                <p className="text-sm text-gray-500 mt-2">Tech Stack: Django, Restframework, MySQL, React, TypeScript, AWS, Redis</p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800">Senior Software Engineer</h3>
+                <p className="text-blue-600">Filterbuy.com • Remote • June 2023 - September 2025</p>
                 <p className="text-gray-600 mb-3">E-commerce Marketplace Platform for HVAC & Air Filters</p>
                 <ul className="list-disc list-inside mt-2 text-gray-600 space-y-1">
                   <li>Architected and maintained multi-tenant Django-based backend system handling product management, inventory, orders, and marketplace integrations</li>
@@ -58,8 +68,8 @@ const Resume: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">Full-Stack Developer</h3>
-                <p className="text-blue-600">Impel.io • Remote • October 2020 - June 2023</p>
+                <h3 className="text-xl font-semibold text-gray-800">Remote Software Engineer</h3>
+                <p className="text-blue-600">Impel.io • October 2020 - June 2023</p>
                 <ul className="list-disc list-inside mt-2 text-gray-600">
                   <li>Engineered full-stack features using Flask and ReactJS</li>
                   <li>Delivered testable and maintainable code with modern testing suites (Pytest, JMeter)</li>
@@ -70,7 +80,7 @@ const Resume: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">Full-Stack Developer</h3>
+                <h3 className="text-xl font-semibold text-gray-800">Remote Software Engineer</h3>
                 <p className="text-blue-600">Delphix • June 2019 - October 2020</p>
                 <ul className="list-disc list-inside mt-2 text-gray-600">
                   <li>Developed serverless backend APIs using AWS Lambda, API Gateway, and SAM</li>
@@ -81,7 +91,7 @@ const Resume: React.FC = () => {
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-800">Full-Stack Developer</h3>
+                <h3 className="text-xl font-semibold text-gray-800">FullStack Engineer</h3>
                 <p className="text-blue-600">Laureate Education • July 2016 - June 2019</p>
                 <ul className="list-disc list-inside mt-2 text-gray-600">
                   <li>Created RESTful services and backend logic using Django and Google App Engine</li>

@@ -26,10 +26,20 @@ basic_scaling:
   idle_timeout: 10m
 
 handlers:
+# SPA entry: root and client-side routes serve index.html
 - url: /
   static_files: build/index.html
   upload: build/index.html
-
+- url: /resume
+  static_files: build/index.html
+  upload: build/index.html
+- url: /contact
+  static_files: build/index.html
+  upload: build/index.html
+- url: /snippets
+  static_files: build/index.html
+  upload: build/index.html
+# Static assets (JS, CSS, images, etc.)
 - url: /(.*)
   static_files: build/\1
   upload: build/(.*)
