@@ -68,9 +68,6 @@ const Navbar: React.FC = () => {
               <Link to="/resume" className={linkClasses('/resume')}>
                 Resume
               </Link>
-              <Link to="/snippets" className={linkClasses('/snippets')}>
-                Snippets
-              </Link>
               <Link to="/contact" className={linkClasses('/contact')}>
                 Contact
               </Link>
@@ -92,16 +89,6 @@ const Navbar: React.FC = () => {
               }`}
             >
               Resume
-            </Link>
-            <Link
-              to="/snippets"
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                isActive('/snippets')
-                  ? 'bg-blue-700 text-white'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-              }`}
-            >
-              Snippets
             </Link>
             <Link
               to="/contact"
