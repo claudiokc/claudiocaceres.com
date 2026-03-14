@@ -19,22 +19,29 @@ yarn build
 
 Output is written to `build/`.
 
-## Deployment (Cloudflare Pages)
+## Deployment (Cloudflare Pages) — GitHub Actions only (Option A)
 
-1. **One-time setup**
-   - Create a [Cloudflare account](https://dash.cloudflare.com) and a Pages project named `claudiocaceres-com` (or change the name in the workflow and create the project with that name).
-   - For **GitHub Actions** deploy, add repository secrets:
-     - `CLOUDFLARE_API_TOKEN`: API token with "Cloudflare Pages — Edit" (create under [API Tokens](https://dash.cloudflare.com/profile/api-tokens)).
-     - `CLOUDFLARE_ACCOUNT_ID`: from Cloudflare dashboard → Account ID.
+We **do not** use Cloudflare’s built-in Git build (which can fail due to Yarn/Node version mismatch). The site is built only in GitHub Actions and deployed via the Wrangler API.
 
-2. **Deploy via GitHub Actions**
-   - Push to `master` runs the workflow in `.github/workflows/cloudflare-pages.yaml`: it builds the frontend and runs `wrangler pages deploy build --project-name=claudiocaceres-com`.
+1. **One-time setup in Cloudflare**
+   - Create a [Cloudflare account](https://dash.cloudflare.com) if needed.
+   - Create a **Pages** project: **Workers & Pages → Create application → Pages → Connect to Git**.
+   - Choose **Direct Upload** (do **not** connect your Git repo here). Create a project named `claudiocaceres-com` (or match the name in the workflow).
+   - If you already have a project connected to Git: go to **Settings → Builds & deployments** and either disconnect the Git source and use Direct Upload only, or create a new Direct Upload project. Deploys will come only from GitHub Actions.
+
+2. **One-time setup in GitHub**
+   - In the repo: **Settings → Secrets and variables → Actions**. Add:
+     - `CLOUDFLARE_API_TOKEN`: API token with **Cloudflare Pages — Edit** (create under [API Tokens](https://dash.cloudflare.com/profile/api-tokens)).
+     - `CLOUDFLARE_ACCOUNT_ID`: from Cloudflare dashboard (right-hand sidebar → **Account ID**).
+
+3. **Deploy**
+   - Push to `master` (or run the workflow manually: **Actions → Deploy to Cloudflare Pages → Run workflow**). The workflow builds the app and runs `wrangler pages deploy build --project-name=claudiocaceres-com`.
    - To use a different project name, edit the workflow and ensure a Pages project with that name exists.
 
-3. **Custom domain**
+4. **Custom domain**
    - In Cloudflare Pages → your project → **Custom domains**, add `claudiocaceres.com` and `www.claudiocaceres.com`. Follow the DNS instructions (CNAME or A/AAAA as shown).
 
-4. **SPA routing**
+5. **SPA routing**
    - The file `public/_redirects` is copied into `build/` and tells Cloudflare Pages to serve `index.html` for all paths (`/* → /index.html 200`), so direct links to `/resume` and `/contact` work.
 
 ## Verification checklist
