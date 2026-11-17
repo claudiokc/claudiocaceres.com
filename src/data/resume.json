@@ -1,0 +1,112 @@
+{
+  "profile": {
+    "name": "Claudio Cáceres",
+    "title": "Senior Software Engineer",
+    "email": "catocaceres@hotmail.com",
+    "github": "https://github.com/claudiokc",
+    "linkedin": "https://linkedin.com/in/claudiokc",
+    "location": "Buenos Aires, Argentina · Remote",
+    "site": "https://claudiocaceres.com"
+  },
+  "summary": "Results-driven Senior Software Engineer with 10+ years of experience designing, building, and scaling full-stack applications. Specializes in Python (Flask, Django), JavaScript (ReactJS), cloud infrastructure (AWS, GCP), and Agile development. Adept at creating robust APIs, CI/CD pipelines, and performance-oriented frontends using modern frameworks and tools.",
+  "experience": [
+    {
+      "title": "Senior Software Engineer",
+      "company": "OpenSolar",
+      "location": "",
+      "period": "Sep 2025 - Present",
+      "description": "",
+      "highlights": [
+        "Backend API using Django/DRF",
+        "Frontend development with React"
+      ],
+      "stack": "Django, Restframework, MySQL, React, TypeScript, AWS, Redis"
+    },
+    {
+      "title": "Senior Software Engineer",
+      "company": "Filterbuy.com",
+      "location": "Remote",
+      "period": "June 2023 - September 2025",
+      "description": "E-commerce Marketplace Platform for HVAC & Air Filters",
+      "highlights": [
+        "Architected and maintained multi-tenant Django-based backend system handling product management, inventory, orders, and marketplace integrations",
+        "Built modern Next.js frontend with TypeScript, implementing responsive design patterns and SEO optimization",
+        "Designed complex database models for product variants, inventory management, and multi-channel sales tracking",
+        "Integrated with 7+ major e-commerce marketplaces (Amazon SP-API, eBay, Walmart, Wayfair) and payment processors",
+        "Developed comprehensive product catalog management with SKU-based inventory tracking across multiple warehouses",
+        "Implemented automated pricing strategies and dynamic pricing algorithms for competitive marketplace positioning",
+        "Built order management system with multi-carrier shipping integration (UPS, FedEx, Amazon FBA)",
+        "Created advanced filtering and search functionality using Elasticsearch/OpenSearch",
+        "Automated inventory synchronization across all sales channels with real-time stock updates",
+        "Containerized application using Docker and implemented CI/CD pipelines with automated testing",
+        "Configured monitoring and logging using Sentry, structured logging, and health checks"
+      ],
+      "stack": "Django 3.2, Next.js 14, React 18, TypeScript, PostgreSQL, Redis, Celery, Elasticsearch/OpenSearch, Docker, AWS, Nginx, Gunicorn, Memcached, REST APIs, GraphQL, Jest, Testing Library"
+    },
+    {
+      "title": "Remote Software Engineer",
+      "company": "Impel.io",
+      "location": "",
+      "period": "October 2020 - June 2023",
+      "description": "",
+      "highlights": [
+        "Engineered full-stack features using Flask and ReactJS",
+        "Delivered testable and maintainable code with modern testing suites (Pytest, JMeter)",
+        "Enhanced platform stability via robust CI/CD automation and Terraform infrastructure",
+        "Drove frontend consistency using TailwindCSS and Redux-based architecture"
+      ],
+      "stack": "Flask, React/Redux, TailwindCSS, Docker, PostgreSQL, AWS, Sentry, Redis"
+    },
+    {
+      "title": "Remote Software Engineer",
+      "company": "Delphix",
+      "location": "",
+      "period": "June 2019 - October 2020",
+      "description": "",
+      "highlights": [
+        "Developed serverless backend APIs using AWS Lambda, API Gateway, and SAM",
+        "Implemented secure authentication using Okta with SAML integrations",
+        "Built interactive UIs and business logic with Angular"
+      ],
+      "stack": "AWS Lambda, API Gateway, PynamoDB, Serverless Framework, Angular"
+    },
+    {
+      "title": "FullStack Engineer",
+      "company": "Laureate Education",
+      "location": "",
+      "period": "July 2016 - June 2019",
+      "description": "",
+      "highlights": [
+        "Created RESTful services and backend logic using Django and Google App Engine",
+        "Automated deployments and managed cloud infrastructure in GCP",
+        "Delivered dynamic frontend interfaces with AngularJS",
+        "Led SAML-based identity provider and SSO system integration"
+      ],
+      "stack": "GCP, Django/Wagtail, Google App Engine, AngularJS, Couchbase"
+    }
+  ],
+  "skills": [
+    { "name": "Frontend", "items": "React/Redux, Angular, TailwindCSS, JavaScript" },
+    { "name": "Backend", "items": "Python, Flask, Django, AWS Lambda" },
+    { "name": "Cloud & DevOps", "items": "AWS, GCP, Docker, Terraform, CI/CD" },
+    { "name": "Database", "items": "PostgreSQL, MongoDB, Couchbase, Redis" },
+    { "name": "Testing", "items": "Pytest, Selenium, JMeter" },
+    { "name": "Tools", "items": "Git, Pyenv, Poetry, SAM" }
+  ],
+  "education": [
+    {
+      "degree": "B.Sc. in Computer Science Engineering",
+      "school": "Universidad Nacional Autónoma de Honduras (UNAH), Honduras"
+    },
+    { "degree": "React Nanodegree", "school": "Udacity" }
+  ],
+  "certifications": [
+    "Python Programming",
+    "ReactJS & Modern JavaScript",
+    "Agile Methodologies",
+    "MongoDB & SQL",
+    "AWS Solutions Architect",
+    "Microservices Design & Architecture",
+    "Data Engineering Fundamentals"
+  ]
+}
