@@ -1,11 +1,14 @@
 export interface Env {
-  /** KV namespace holding the edited experience and login rate-limit counters. */
+  /** KV namespace holding the edited experience, contact messages and rate-limit counters. */
   RESUME_KV?: KVNamespace;
   /** Output of `npm run hash-password`. */
   ADMIN_PASSWORD_HASH?: string;
   /** Random string used to sign session cookies. */
   SESSION_SECRET?: string;
 }
+
+/** KV key prefix for contact-form messages. */
+export const MESSAGE_PREFIX = 'msg:';
 
 export function json(body: unknown, status = 200, headers: Record<string, string> = {}): Response {
   return new Response(JSON.stringify(body), {

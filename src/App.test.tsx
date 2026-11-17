@@ -27,3 +27,20 @@ describe('validateExperience', () => {
     expect(validateExperience([{ ...job, stack: 'x'.repeat(601) }]).ok).toBe(false);
   });
 });
+
+describe('validateContact', () => {
+  it('accepts a complete message and trims it', async () => {
+    const { validateContact } = await import('./lib/contact');
+    expect(validateContact({ name: ' Ana ', email: 'ana@example.com', message: ' Hi ' })).toEqual({
+      ok: true,
+      value: { name: 'Ana', email: 'ana@example.com', message: 'Hi' },
+    });
+  });
+
+  it('rejects bad emails, empty fields and long messages', async () => {
+    const { validateContact } = await import('./lib/contact');
+    expect(validateContact({ name: 'Ana', email: 'nope', message: 'Hi' }).ok).toBe(false);
+    expect(validateContact({ name: '', email: 'ana@example.com', message: 'Hi' }).ok).toBe(false);
+    expect(validateContact({ name: 'Ana', email: 'ana@example.com', message: 'x'.repeat(4001) }).ok).toBe(false);
+  });
+});

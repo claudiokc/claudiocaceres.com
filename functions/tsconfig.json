@@ -11,5 +11,5 @@
     "noEmit": true,
     "strict": true
   },
-  "include": [".", "../server", "../src/lib/experience.ts", "../src/data/resume.json"]
+  "include": [".", "../server", "../src/lib/experience.ts", "../src/lib/contact.ts", "../src/data/resume.json"]
 }

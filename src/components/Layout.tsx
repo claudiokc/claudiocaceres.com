@@ -11,7 +11,7 @@ const titles: Record<string, string> = {
   '/resume': `Resume — ${SITE}`,
   '/contact': `Contact — ${SITE}`,
   '/login': `Sign in — ${SITE}`,
-  '/admin': `Edit experience — ${SITE}`,
+  '/admin': `Admin — ${SITE}`,
 };
 
 export default function Layout() {
