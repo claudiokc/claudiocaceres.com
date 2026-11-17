@@ -5,6 +5,9 @@ export interface Env {
   ADMIN_PASSWORD_HASH?: string;
   /** Random string used to sign session cookies. */
   SESSION_SECRET?: string;
+  /** Optional: alerts for new contact messages (see README). */
+  TELEGRAM_BOT_TOKEN?: string;
+  TELEGRAM_CHAT_ID?: string;
 }
 
 /** KV key prefix for contact-form messages. */

@@ -8,7 +8,8 @@
 - **API**: writes require a valid session (except the public contact form) and a same-origin `Origin` header,
   are capped at 64 KB and validated.
 - **Contact messages**: visitors' names, emails and messages are stored in KV for 180 days and readable only
-  when signed in. Delete them from `/admin` when no longer needed.
+  when signed in. Delete them from `/admin` when no longer needed. If Telegram alerts are on, each message is
+  also sent to your Telegram chat. The bot token is a Pages secret and is never logged.
   Rate limits are described in the README.
 - **Headers**: `public/_headers` sets a Content-Security-Policy, `X-Frame-Options: DENY` and related headers.
 - **Frontend**: no `dangerouslySetInnerHTML`; stored experience is rendered as text.

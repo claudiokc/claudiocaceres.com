@@ -1,4 +1,8 @@
 # Local secrets for `npm run dev:api`. Copy to .dev.vars (gitignored) and fill in.
-# In production set both as encrypted variables on the Cloudflare Pages project.
+# In production set them as encrypted secrets on the Cloudflare Pages project.
 ADMIN_PASSWORD_HASH="<output of: npm run hash-password>"
 SESSION_SECRET="<output of: openssl rand -base64 32>"
+
+# Optional: Telegram alerts for new contact messages (see README).
+# TELEGRAM_BOT_TOKEN="<token from @BotFather>"
+# TELEGRAM_CHAT_ID="<your chat id>"

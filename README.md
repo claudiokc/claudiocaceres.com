@@ -70,8 +70,22 @@ Static files never run a Function (`public/_routes.json` limits Functions to `/a
   field that silently drops bot submissions. Messages are kept for 180 days.
 - Writes must be same-origin, at most 64 KB, and are validated field by field.
 
-The contact form does not send email notifications (that needs a paid or third-party mail service); check
-the **Messages** tab in `/admin`.
+New messages are always in the **Messages** tab in `/admin`. Optionally, get a Telegram alert for each one:
+
+## Telegram alerts for contact messages (optional, free)
+
+1. In Telegram, message **@BotFather**, send `/newbot`, and keep the token it gives you.
+2. Send your new bot any message (it can only message people who wrote to it first).
+3. Find your chat ID. This asks for the token without echoing it or saving it in shell history:
+   ```bash
+   read -rs "TOKEN?Bot token: "; echo; curl -s "https://api.telegram.org/bot$TOKEN/getUpdates" | grep -o '"chat":{"id":[-0-9]*' | head -1; unset TOKEN
+   ```
+   (In bash, use `read -rsp "Bot token: " TOKEN` instead.)
+4. On the Pages project → **Settings → Variables and Secrets**, add Production secrets `TELEGRAM_BOT_TOKEN` and
+   `TELEGRAM_CHAT_ID`, then retry the latest deployment.
+
+Alerts are sent after the message is saved, so a Telegram outage never affects visitors, and they are capped
+by the form's own limits (30 a day). They include the sender's name, email and message.
 
 Recommended, in the dashboard (free): **Security → WAF → Rate limiting rules**, one rule on
 `(http.request.uri.path wildcard "/api/*")`, 20 requests per 10 seconds per IP, action *Block*; and turn on
