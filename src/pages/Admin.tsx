@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { emptyExperience, validateExperience, type Experience } from '../lib/experience';
+import Inbox from '../components/Inbox';
 
 type Notice = { kind: 'ok' | 'error'; text: string } | null;
 
@@ -18,6 +19,7 @@ export default function Admin() {
   const [jobs, setJobs] = useState<Experience[]>([]);
   const [notice, setNotice] = useState<Notice>(null);
   const [saving, setSaving] = useState(false);
+  const [tab, setTab] = useState<'messages' | 'experience'>('messages');
 
   useEffect(() => {
     Promise.all([api.session(), api.resume()])
@@ -73,12 +75,32 @@ export default function Admin() {
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-3xl font-bold">Professional experience</h1>
-          <p className="mt-1 text-sm">Listed in this order on the resume page and in the CV download.</p>
-        </div>
+        <h1 className="text-3xl font-bold">Admin</h1>
         <button type="button" className="btn" onClick={signOut}>Sign out</button>
       </header>
+
+      <div role="tablist" aria-label="Admin sections" className="flex gap-1 border-b border-slate-200">
+        {(['messages', 'experience'] as const).map((name) => (
+          <button
+            key={name}
+            type="button"
+            role="tab"
+            aria-selected={tab === name}
+            onClick={() => setTab(name)}
+            className={`-mb-px border-b-2 px-4 py-2 text-sm font-semibold capitalize ${
+              tab === name ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+
+      {tab === 'messages' ? (
+        <Inbox />
+      ) : (
+      <>
+      <p className="text-sm">Professional experience, listed in this order on the resume page and in the CV download.</p>
 
       {jobs.map((job, index) => (
         <fieldset key={index} className="card space-y-4">
@@ -149,6 +171,8 @@ export default function Admin() {
           </p>
         )}
       </div>
+      </>
+      )}
     </div>
   );
 }

@@ -6,11 +6,13 @@ Personal site: a Vite + React SPA with a tiny API (Cloudflare Pages Functions), 
 | --- | --- |
 | `/` | Home |
 | `/resume` | Resume, with a **Download CV (PDF)** button (generated in the browser) |
-| `/contact` | Contact details; the form opens a draft in the visitor's email app |
+| `/contact` | Contact form (messages land in the `/admin` inbox) and contact details |
 | `/login` | Owner sign-in |
-| `/admin` | Editor for the Professional Experience section (requires sign-in) |
+| `/admin` | Inbox for contact messages and editor for Professional Experience (requires sign-in) |
 | `/llms.txt` | Generated at build time from `src/data/resume.json` |
 | `/api/resume` | `GET` current experience (public), `PUT` save it (signed in) |
+| `/api/contact` | `POST` a contact message (public, rate limited) |
+| `/api/messages` | `GET` the inbox, `DELETE ?id=` one message (signed in) |
 | `/api/login`, `/api/session` | Sign in, check session, sign out |
 
 Resume content lives in `src/data/resume.json`. Experience saved from `/admin` is stored in Cloudflare KV and
@@ -41,9 +43,10 @@ Cloudflare Pages deploys the site itself through its Git integration with this r
 push to `master`. It needs no secrets. Make it a required check (**Settings → Branches** in GitHub) if you want
 failing code blocked from `master`, because Cloudflare deploys `master` whether or not CI passes.
 
-## One-time setup for login and editing
+## One-time setup for login, editing and the contact form
 
-Until this is done the site works normally and `/login` answers "not configured".
+Until this is done the site works normally, `/login` answers "not configured", and the contact form shows
+the email address to write to instead.
 In the Cloudflare dashboard, on the Pages project → **Settings**:
 
 1. **Bindings → Add → KV namespace**: create a namespace (any name) and bind it as `RESUME_KV`.
@@ -63,7 +66,12 @@ Static files never run a Function (`public/_routes.json` limits Functions to `/a
 - `/api/*`: 60 requests per minute per IP (per edge isolate, best effort).
 - Login: 5 failed attempts per IP per 15 minutes and 15 failed attempts overall per hour (stored in KV),
   then `429` even for the right password.
+- Contact form: 3 messages per IP per hour and 30 overall per day (stored in KV), plus a hidden honeypot
+  field that silently drops bot submissions. Messages are kept for 180 days.
 - Writes must be same-origin, at most 64 KB, and are validated field by field.
+
+The contact form does not send email notifications (that needs a paid or third-party mail service); check
+the **Messages** tab in `/admin`.
 
 Recommended, in the dashboard (free): **Security → WAF → Rate limiting rules**, one rule on
 `(http.request.uri.path wildcard "/api/*")`, 20 requests per 10 seconds per IP, action *Block*; and turn on
