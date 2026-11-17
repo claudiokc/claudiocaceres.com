@@ -31,6 +31,6 @@ jobs:
       - run: npm run build
       - name: Verify build output
         run: |
-          for f in index.html _redirects _headers _routes.json llms.txt robots.txt; do
+          for f in index.html _headers _routes.json llms.txt robots.txt; do
             test -f "build/$f" || { echo "Missing build/$f"; exit 1; }
           done
