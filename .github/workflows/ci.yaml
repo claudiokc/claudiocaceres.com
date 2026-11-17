@@ -1,7 +1,7 @@
-# Checks every pull request; deploys master to Cloudflare Pages.
-# Repository secrets: CLOUDFLARE_API_TOKEN (Pages: Edit), CLOUDFLARE_ACCOUNT_ID
-# Optional repository variable: CLOUDFLARE_PROJECT_NAME (default: claudiocaceresdotcom)
-name: CI/CD
+# Checks every pull request and every push to master.
+# Deploys are done by Cloudflare Pages' own Git integration (production from master,
+# a preview URL for every other branch), not by this workflow.
+name: CI
 on:
   pull_request:
   push:
@@ -34,10 +34,3 @@ jobs:
           for f in index.html _redirects _headers _routes.json llms.txt robots.txt; do
             test -f "build/$f" || { echo "Missing build/$f"; exit 1; }
           done
-      - name: Deploy to Cloudflare Pages
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        run: npx wrangler pages deploy build --project-name="$PROJECT" --branch=master --commit-dirty=true
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'claudiocaceresdotcom' }}

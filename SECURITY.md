@@ -1,8 +1,8 @@
 # Security
 
-- **Secrets**: `.env` and `.dev.vars` are gitignored. CI uses the repository secrets `CLOUDFLARE_API_TOKEN` and
-  `CLOUDFLARE_ACCOUNT_ID`; the site uses the Pages secrets `ADMIN_PASSWORD_HASH` and `SESSION_SECRET`.
-  Rotate any of them if exposed.
+- **Secrets**: `.env` and `.dev.vars` are gitignored. CI needs no secrets; deploys run in Cloudflare Pages'
+  Git integration. The site uses the Pages secrets `ADMIN_PASSWORD_HASH` and `SESSION_SECRET`. Rotate them
+  if exposed.
 - **Login**: one owner account. The password is stored only as a salted PBKDF2-SHA256 hash. Sessions are
   HMAC-signed cookies (`HttpOnly`, `Secure`, `SameSite=Strict`, 12 hours).
 - **API**: writes require a valid session and a same-origin `Origin` header, are capped at 64 KB and validated.

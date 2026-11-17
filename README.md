@@ -29,11 +29,17 @@ For the API, copy `.dev.vars.example` to `.dev.vars` and fill in both values. `n
 
 ## Deployment
 
-`.github/workflows/cloudflare-pages.yaml` runs typecheck, tests and build on every pull request, and deploys to
-Cloudflare Pages on every push to `master` (or a manual run). It needs:
+Cloudflare Pages deploys the site itself through its Git integration with this repository (Pages project
+`claudiocaceresdotcom`):
 
-- Secrets `CLOUDFLARE_API_TOKEN` (permission *Cloudflare Pages: Edit*) and `CLOUDFLARE_ACCOUNT_ID`.
-- Optional variable `CLOUDFLARE_PROJECT_NAME` if the Pages project is not called `claudiocaceresdotcom`.
+- A push to `master` deploys to production (`claudiocaceres.com`).
+- Every other branch gets a preview URL, which the Cloudflare bot posts on the pull request.
+- The build command is `npm run build` and the output directory is `build`, both set in the Pages project's
+  **Settings → Build**.
+
+`.github/workflows/ci.yaml` only checks the code: it runs typecheck, tests and build on every pull request and
+push to `master`. It needs no secrets. Make it a required check (**Settings → Branches** in GitHub) if you want
+failing code blocked from `master`, because Cloudflare deploys `master` whether or not CI passes.
 
 ## One-time setup for login and editing
 
@@ -44,7 +50,8 @@ In the Cloudflare dashboard, on the Pages project → **Settings**:
 2. **Variables and Secrets** (type *Secret*, Production):
    - `ADMIN_PASSWORD_HASH`: output of `npm run hash-password`
    - `SESSION_SECRET`: output of `openssl rand -base64 32`
-3. Redeploy (re-run the workflow) so the Functions pick them up.
+3. Redeploy so the Functions pick them up: **Deployments → latest production deployment → Retry deployment**,
+   or push a commit to `master`.
 
 Changing `SESSION_SECRET` signs everyone out; changing `ADMIN_PASSWORD_HASH` changes the password.
 
