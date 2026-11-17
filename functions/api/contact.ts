@@ -29,3 +29,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   return json({ sent: true });
 };
+
+/** Any other method (e.g. opening /api/contact in a browser). */
+export const onRequest: PagesFunction<Env> = async () =>
+  json({ error: 'Use POST to send a message.' }, 405, { Allow: 'POST' });
