@@ -1,51 +1,63 @@
 # claudiocaceres.com
 
-Personal site (Vite + React SPA). Deployed on **Cloudflare Pages**.
+Personal site: a Vite + React SPA with a tiny API (Cloudflare Pages Functions), hosted on the **Cloudflare free plan**.
+
+| Route | What it is |
+| --- | --- |
+| `/` | Home |
+| `/resume` | Resume, with a **Download CV (PDF)** button (generated in the browser) |
+| `/contact` | Contact details; the form opens a draft in the visitor's email app |
+| `/login` | Owner sign-in |
+| `/admin` | Editor for the Professional Experience section (requires sign-in) |
+| `/llms.txt` | Generated at build time from `src/data/resume.json` |
+| `/api/resume` | `GET` current experience (public), `PUT` save it (signed in) |
+| `/api/login`, `/api/session` | Sign in, check session, sign out |
+
+Resume content lives in `src/data/resume.json`. Experience saved from `/admin` is stored in Cloudflare KV and
+overrides that file's `experience` on the live site; if the API is down the bundled copy is shown.
 
 ## Local development
 
 ```bash
-yarn install
-yarn dev
+npm install
+npm run dev        # UI on http://localhost:3000 (proxies /api to :8788)
+npm run dev:api    # built site + API on http://localhost:8788
 ```
 
-Open http://localhost:3000. Use the nav or go directly to http://localhost:3000/resume and http://localhost:3000/contact to verify routes.
+For the API, copy `.dev.vars.example` to `.dev.vars` and fill in both values. `npm run typecheck`, `npm test` and
+`npm run build` are what CI runs.
 
-## Build
+## Deployment
 
-```bash
-yarn build
-```
+`.github/workflows/cloudflare-pages.yaml` runs typecheck, tests and build on every pull request, and deploys to
+Cloudflare Pages on every push to `master` (or a manual run). It needs:
 
-Output is written to `build/`.
+- Secrets `CLOUDFLARE_API_TOKEN` (permission *Cloudflare Pages: Edit*) and `CLOUDFLARE_ACCOUNT_ID`.
+- Optional variable `CLOUDFLARE_PROJECT_NAME` if the Pages project is not called `claudiocaceresdotcom`.
 
-## Deployment (Cloudflare Pages) — GitHub Actions only (Option A)
+## One-time setup for login and editing
 
-We **do not** use Cloudflare’s built-in Git build (which can fail due to Yarn/Node version mismatch). The site is built only in GitHub Actions and deployed via the Wrangler API.
+Until this is done the site works normally and `/login` answers "not configured".
+In the Cloudflare dashboard, on the Pages project → **Settings**:
 
-1. **One-time setup in Cloudflare**
-   - Create a [Cloudflare account](https://dash.cloudflare.com) if needed.
-   - Create a **Pages** project: **Workers & Pages → Create application → Pages → Connect to Git**.
-   - Choose **Direct Upload** (do **not** connect your Git repo here). Create a project named `claudiocaceres-com` (or match the name in the workflow).
-   - If you already have a project connected to Git: go to **Settings → Builds & deployments** and either disconnect the Git source and use Direct Upload only, or create a new Direct Upload project. Deploys will come only from GitHub Actions.
+1. **Bindings → Add → KV namespace**: create a namespace (any name) and bind it as `RESUME_KV`.
+2. **Variables and Secrets** (type *Secret*, Production):
+   - `ADMIN_PASSWORD_HASH`: output of `npm run hash-password`
+   - `SESSION_SECRET`: output of `openssl rand -base64 32`
+3. Redeploy (re-run the workflow) so the Functions pick them up.
 
-2. **One-time setup in GitHub**
-   - In the repo: **Settings → Secrets and variables → Actions**. Add:
-     - `CLOUDFLARE_API_TOKEN`: API token with **Cloudflare Pages — Edit** (create under [API Tokens](https://dash.cloudflare.com/profile/api-tokens)).
-     - `CLOUDFLARE_ACCOUNT_ID`: from Cloudflare dashboard (right-hand sidebar → **Account ID**).
+Changing `SESSION_SECRET` signs everyone out; changing `ADMIN_PASSWORD_HASH` changes the password.
 
-3. **Deploy**
-   - Push to `master` (or run the workflow manually: **Actions → Deploy to Cloudflare Pages → Run workflow**). The workflow builds the app and runs `wrangler pages deploy build --project-name=claudiocaceres-com`.
-   - To use a different project name, edit the workflow and ensure a Pages project with that name exists.
+## Rate limiting and cost
 
-4. **Custom domain**
-   - In Cloudflare Pages → your project → **Custom domains**, add `claudiocaceres.com` and `www.claudiocaceres.com`. Follow the DNS instructions (CNAME or A/AAAA as shown).
+On the free plan there are no bandwidth charges and nothing bills on overage, so traffic cannot raise the cost.
+Static files never run a Function (`public/_routes.json` limits Functions to `/api/*`). On top of that:
 
-5. **SPA routing**
-   - The file `public/_redirects` is copied into `build/` and tells Cloudflare Pages to serve `index.html` for all paths (`/* → /index.html 200`), so direct links to `/resume` and `/contact` work.
+- `/api/*`: 60 requests per minute per IP (per edge isolate, best effort).
+- Login: 5 failed attempts per IP per 15 minutes and 15 failed attempts overall per hour (stored in KV),
+  then `429` even for the right password.
+- Writes must be same-origin, at most 64 KB, and are validated field by field.
 
-## Verification checklist
-
-- **Routes**: Open `https://<your-domain>/`, `/resume`, `/contact` in a new tab or after a hard refresh; all should load the app (no 404).
-- **Analytics**: Google Analytics tag is in `index.html` (ID `G-SRQZQ7KK1M`); SPA route changes are tracked in `src/App.tsx`.
-- **HTTPS**: Ensure SSL is active for apex and `www` on Cloudflare.
+Recommended, in the dashboard (free): **Security → WAF → Rate limiting rules**, one rule on
+`(http.request.uri.path wildcard "/api/*")`, 20 requests per 10 seconds per IP, action *Block*; and turn on
+**Security → Bots → Bot Fight Mode**.

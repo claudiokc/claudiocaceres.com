@@ -1,43 +1,43 @@
-# Build frontend and deploy to Cloudflare Pages.
-# Requires repository secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
-# Optional: set CLOUDFLARE_PROJECT_NAME (default: claudiocaceresdotcom)
-name: Deploy to Cloudflare Pages
+# Checks every pull request; deploys master to Cloudflare Pages.
+# Repository secrets: CLOUDFLARE_API_TOKEN (Pages: Edit), CLOUDFLARE_ACCOUNT_ID
+# Optional repository variable: CLOUDFLARE_PROJECT_NAME (default: claudiocaceresdotcom)
+name: CI/CD
 on:
+  pull_request:
   push:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
+    timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
       - name: Verify build output
         run: |
-          test -f build/index.html || (echo "Missing build/index.html" && exit 1)
-          test -f build/_redirects || (echo "Missing build/_redirects (SPA fallback)" && exit 1)
-
+          for f in index.html _redirects _headers _routes.json llms.txt robots.txt; do
+            test -f "build/$f" || { echo "Missing build/$f"; exit 1; }
+          done
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy build --project-name=claudiocaceresdotcom
-          workingDirectory: .
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        run: npx wrangler pages deploy build --project-name="$PROJECT" --branch=master --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'claudiocaceresdotcom' }}
