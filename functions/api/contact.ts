@@ -1,10 +1,11 @@
 import { validateContact, type StoredMessage } from '../../src/lib/contact';
 import { clientIp, json, MESSAGE_PREFIX, readJson, type Env } from '../../server/http';
+import { notifyNewMessage } from '../../server/notify';
 import { contactMessages } from '../../server/ratelimit';
 
 const KEEP_SECONDS = 180 * 24 * 60 * 60;
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request, env, waitUntil }) => {
   if (!env.RESUME_KV) return json({ error: 'The contact form is not set up yet.' }, 503);
   const kv = env.RESUME_KV;
   const ip = clientIp(request);
@@ -26,6 +27,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const id = `${String(9_999_999_999_999 - Date.now()).padStart(13, '0')}-${crypto.randomUUID().slice(0, 8)}`;
   const stored: StoredMessage = { id, receivedAt, ...result.value };
   await kv.put(`${MESSAGE_PREFIX}${id}`, JSON.stringify(stored), { expirationTtl: KEEP_SECONDS });
+  // Runs after the response is sent, so the visitor never waits on Telegram.
+  waitUntil(notifyNewMessage(env, stored));
 
   return json({ sent: true });
 };
